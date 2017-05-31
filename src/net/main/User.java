@@ -1,6 +1,7 @@
 package net.main;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
 /**
  * Created by asus on 29.05.17.
