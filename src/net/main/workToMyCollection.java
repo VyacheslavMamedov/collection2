@@ -1,32 +1,56 @@
 package net.main;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import org.omg.PortableInterceptor.USER_EXCEPTION;
 
-import static javafx.scene.input.KeyCode.L;
-import static javafx.scene.input.KeyCode.M;
+import javax.jws.soap.SOAPBinding;
+import java.util.*;
 
-/**
- * Created by asus on 29.05.17.
- */
 public class workToMyCollection {
 
+   private int SIZE_USER_COLLECTION = 0;
+   private int mySize = 0;
 
     public void sProgramm(){
-        List<myFixedCollection> myList = new LinkedList<>();
+
+        final int[] tempIndex = {0};
+        Map<Integer, User> myList = new HashMap<Integer, User>(){
+
+            @Override
+            public User put(Integer key, User value) {
+
+                if (mySize == SIZE_USER_COLLECTION) System.err.println("Collection fool");//
+
+                if (mySize > SIZE_USER_COLLECTION) {
+                    HashMap.Entry<Integer, User> firstElementIntoMyMap =
+                            (Entry<Integer, User>) super.entrySet().iterator().next();
+
+                    Integer firstId = firstElementIntoMyMap.getKey();
+
+                    super.remove(firstId);//delete the first elements
+
+                    return super.put(key, value);//add elements on lasp position
+
+                } else {
+                    System.out.println("Add " + mySize + " elements in collection");
+                    return super.put(key, value);
+                }
+            //    return value;
+            }
+        };
+
         int idNum = 1;
+
         //заполняем коллекцию
         boolean controlExit  = false;
         mainMenu(2);
-        int SIZE_USER_COLLECTION = 0;
+
         int pressEnterSizeCollection = 0;
-        pressEnterSizeCollection = correctEnterToIntScanner(new Scanner(System.in),"");
+        pressEnterSizeCollection = correctEnterToIntScanner(new Scanner(System.in),"Enter nomber");
 
         if (pressEnterSizeCollection == 1){
-            SIZE_USER_COLLECTION = correctEnterToIntScanner(new Scanner(System.in),"");
+            SIZE_USER_COLLECTION = correctEnterToIntScanner(new Scanner(System.in),"Enter size collection");
         } else SIZE_USER_COLLECTION = 16;
+
 
 
         while (controlExit!=true) {
@@ -34,27 +58,28 @@ public class workToMyCollection {
             mainMenu(1);
             switch (correctEnterToIntScanner(new Scanner(System.in),"Enter menu: ")) {
                 case 1: {
+                    mySize=idNum;
+                    System.out.print("Enter First name: ");
                     Scanner in = new Scanner(System.in);
-                    System.out.print("Enter First Name: ");
-                    String firstName = in.nextLine();
-                    System.out.print("Enter Last Name: ");
-                    String lastName = in.nextLine();
-                    System.out.print("Enter Street: ");
-                    String street = in.nextLine();
+                    String firstName = in.next();
 
-                    if (myList.size()!=SIZE_USER_COLLECTION) {
-                        myList.add(new myFixedCollection(idNum, new User(firstName, lastName, street)));
-                        idNum++;
-                    } else
-                    {
-                        myList.remove(0);
-                        myList.add(new myFixedCollection(idNum, new User(firstName, lastName, street)));
-                    }
+                    System.out.print("Enter last name: ");
+                    String lastName = in.next();
+
+                    System.out.print("Enter phone: ");
+                    String phone = in.next();
+
+                    myList.put(idNum,new User(firstName,lastName,phone));
+
+                    ++idNum;
                     controlExit  = false;
                     break;
                 }
                 case 2:{
-                    System.out.println(myList);
+                    for (Map.Entry entry : myList.entrySet()) {
+                        System.out.println("id: "+entry.getKey() + " : "
+                                + entry.getValue());
+                    }
                     controlExit  = false;
                     break;
                 }

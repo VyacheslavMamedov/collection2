@@ -1,65 +1,27 @@
 package net.main;
 
-import java.util.HashMap;
-import java.util.Scanner;
 
-/**
- * Created by asus on 29.05.17.
- */
-public class User {
+public class User <F, L, P>{
 
-    private String firstName;
-    private String lastName;
-    private String street;
 
-    public User(String firstName, String lastName, String street) {
+    private final F firstName;
+    private final L lastName;
+    private final P phone;
+
+    public User(F firstName, L lastName, P phone){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.street = street;
-    }
+        this.phone = phone;
 
-    public String getFirstName() {
-        return firstName;
-    }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address=" + street +
+                "firstName=" + firstName +
+                ", lastName=" + lastName +
+                ", phone=" + phone +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
-        return street != null ? street.equals(user.street) : user.street == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = firstName != null ? firstName.hashCode() : 0;
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (street != null ? street.hashCode() : 0);
-        return result;
     }
 }
